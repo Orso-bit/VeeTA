@@ -13,6 +13,7 @@ struct FolderView: View {
     
     var folder : TreeFolder
     var body: some View {
+        // list for every tree
         Text("FolderView")
     }
     /*

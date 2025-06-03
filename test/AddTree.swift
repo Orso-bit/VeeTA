@@ -41,7 +41,7 @@ struct AddTree: View {
                     TextField("Note extra", text: $treeExtraNotes, axis: .vertical)
                         .lineLimit(3...6)
                 }
-                
+                /*
                 // Cluster inserting
                 Section("Cluster") {
                     if folders.isEmpty {
@@ -60,7 +60,7 @@ struct AddTree: View {
                             showingAddCluster = true
                         }
                     }
-                }
+                }*/
                 
                 // Location
                 
@@ -165,7 +165,7 @@ struct AddTree: View {
     }
     
     private func saveTree() {
-        // Create the model Tree starting from TreeDraft
+        // Create the model Tree
         let newTree = Tree(
             name: treeName,
             specie: treeSpecie,
