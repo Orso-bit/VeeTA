@@ -20,45 +20,31 @@ struct ContentView: View {
     
     var body: some View {
         
-        NavigationStack{
+        NavigationStack {
             
-            ScrollView{
-                
-                if folders.isEmpty {
-                    VStack{
-                        Text("Create your first cluster")
-                        Image(systemName: "tree")
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button{
-                                showingAddOptions = true
+                    List {
+                        ForEach(folders, id:\.self) { folder in
+                            NavigationLink {
+                                FolderView(folder: folder)
                             } label: {
-                                Image(systemName: "plus")
+                                VStack {
+                                    Text(folder.name)
+                                        .font(.title)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(.white)
+                                        .lineLimit(1)
+                                    Spacer()
+                                }
                             }
+                            .padding(.horizontal, 20)
+                            .padding(.top, 20)
                         }
                     }
-                }
-                
-                else{
-                    
-                    ForEach(folders, id:\.self) { folder in
-                        NavigationLink {
-                            FolderView(folder: folder)
-                        } label: {
-                            VStack {
-                                Text(folder.name)
-                                    .font(.title)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.white)
-                                    .lineLimit(1)
-                                Spacer()
-                            }
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
+                    .sheet(isPresented: $showingAddOptions) {
+                        AddCluster()
                     }
-                    
+                    .navigationTitle("Clusters")
+                    .searchable(text: .constant(""))
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button{
@@ -70,11 +56,6 @@ struct ContentView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingAddOptions) {
-                AddCluster()
-            }
-            .navigationTitle("Clusters")
-            .searchable(text: .constant(""))
         }
         
         /*NavigationStack {
@@ -134,8 +115,6 @@ struct ContentView: View {
             }
         }
          */
-    }
-}
 
 #Preview {
     ContentView()
