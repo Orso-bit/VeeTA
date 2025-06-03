@@ -22,7 +22,7 @@ struct ContentView: View {
         
         NavigationStack{
             
-            VStack{
+            ScrollView{
                 
                 if folders.isEmpty {
                     VStack{
@@ -42,7 +42,7 @@ struct ContentView: View {
                 
                 else{
                     
-                    ForEach(folders, id: \.self) { folder in
+                    ForEach(folders, id:\.self) { folder in
                         NavigationLink {
                             FolderView(folder: folder)
                         } label: {
