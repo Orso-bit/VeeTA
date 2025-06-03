@@ -16,9 +16,9 @@ class TreeFolder {
     @Relationship(deleteRule: .cascade)
     var trees: [Tree]
     
-    init(name: String, createdAt: Date = .now, trees: [Tree] = []) {
+    init(name: String, createdAt: Date = .now) {
         self.name = name
         self.createdAt = createdAt
-        self.trees = trees
+        self.trees = []
     }
 }

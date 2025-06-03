@@ -42,7 +42,7 @@ struct ContentView: View {
                 
                 else{
                     
-                    ForEach(folders) { folder in
+                    ForEach(folders, id: \.self) { folder in
                         NavigationLink {
                             FolderView(folder: folder)
                         } label: {

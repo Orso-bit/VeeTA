@@ -12,6 +12,7 @@ struct testApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(for: [Tree.self,TreeFolder.self])
         }
     }
 }
