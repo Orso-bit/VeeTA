@@ -46,37 +46,14 @@ struct ContentView: View {
                         NavigationLink {
                             FolderView(folder: folder)
                         } label: {
-                            
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 20)
-                                    .frame(height: 90)
-                                    .foregroundStyle(Color.accentColor)
-                                HStack{
-                                    VStack{
-                                        Text(folder.name)
-                                            .font(.title)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(.white)
-                                            .lineLimit(1)
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                    VStack{
-                                        Spacer()
-                                        HStack{
-                                            Image(systemName: "tree.fill")
-                                                .foregroundStyle(.white)
-                                            Text("\(folder.trees.count)")
-                                                .font(.title)
-                                                .fontWeight(.semibold)
-                                                .foregroundStyle(.white)
-                                        }
-                                        
-                                    }
-                                }
-                                .padding()
+                            VStack {
+                                Text(folder.name)
+                                    .font(.title)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white)
+                                    .lineLimit(1)
+                                Spacer()
                             }
-                            
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 20)
