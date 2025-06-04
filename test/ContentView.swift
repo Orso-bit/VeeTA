@@ -14,8 +14,6 @@ struct ContentView: View {
     @Query private var folders: [TreeFolder]
     @Query private var trees: [Tree]
     
-    @State private var showingAddOptions = false
-    @State private var showingAddTree = false
     @State private var showingAddCluster = false
     
     var body: some View {
@@ -37,20 +35,12 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        showingAddOptions = true
+                        showingAddCluster = true
                     }) {
                         Image(systemName: "plus")
                     }
                 }
-            // OK MA BISOGNA CREARE SOLO IL CLUSTER E UNA VOLTA LI' GLI ALBERI
-            }.confirmationDialog("Add", isPresented: $showingAddOptions) {
-                Button("New Tree") {
-                    showingAddTree = true
-                }
-                Button("New Cluster") {
-                    showingAddCluster = true
-                }
-                Button("Cancel", role: .cancel) { }
+                // OK MA BISOGNA CREARE SOLO IL CLUSTER E UNA VOLTA LI' GLI ALBERI
             }
             // Add Cluster View
             .sheet(isPresented: $showingAddCluster) {
