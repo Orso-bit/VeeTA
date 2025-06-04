@@ -19,7 +19,6 @@ struct ContentView: View {
     @State private var showingAddCluster = false
     
     var body: some View {
-        
         NavigationStack {
             List {
                 ForEach(folders, id:\.self) { folder in
@@ -28,36 +27,55 @@ struct ContentView: View {
                     } label: {
                         VStack {
                             Text(folder.name)
-                                .font(.title)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.black)
-                                .lineLimit(1)
-                            Spacer()
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
                 }
-            }
-            .sheet(isPresented: $showingAddOptions) {
-                AddCluster()
+                .onDelete(perform: deleteFolder)
             }
             .navigationTitle("Clusters")
             .searchable(text: .constant(""))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button{
+                    Button(action: {
                         showingAddOptions = true
-                    } label: {
+                    }) {
                         Image(systemName: "plus")
                     }
                 }
+            // OK MA BISOGNA CREARE SOLO IL CLUSTER E UNA VOLTA LI' GLI ALBERI
+            }.confirmationDialog("Add", isPresented: $showingAddOptions) {
+                Button("New Tree") {
+                    showingAddTree = true
+                }
+                Button("New Cluster") {
+                    showingAddCluster = true
+                }
+                Button("Cancel", role: .cancel) { }
+            }
+            // Add Cluster View
+            .sheet(isPresented: $showingAddCluster) {
+                AddCluster()
             }
         }
     }
     
-    // add func to delete and edit folder
+    // func to delete
+    func deleteFolder(_ indexSet: IndexSet) {
+        withAnimation {
+            for index in indexSet {
+                let folderToDelete = folders[index]
+                modelContext.delete(folderToDelete)
+            }
+            do {
+                try modelContext.save()
+            } catch {
+                print("Errore durante l'eliminazione del folder: \(error)")
+            }
+        }
+    }
 }
+
+// add func to delete and edit folder
 
 /*NavigationStack {
  VStack {

@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Tree {
+class Tree: Identifiable {
     
     // Relation with folders
     @Relationship(inverse: \TreeFolder.trees)

@@ -18,7 +18,6 @@ struct AddTree: View {
     @Query private var folders: [TreeFolder]
     
     @State private var newFolderCreated: TreeFolder? = nil
-    @State private var tree: Tree
     @State private var showingAddCluster = false
     @State private var selectedFolder: TreeFolder?
     @State private var showingHeightMeasurement = false
@@ -29,6 +28,8 @@ struct AddTree: View {
     @State private var treeName = ""
     @State private var treeSpecie = ""
     @State private var treeExtraNotes = ""
+    
+    let folder: TreeFolder
     
     var body: some View {
         NavigationStack {
@@ -151,16 +152,6 @@ struct AddTree: View {
                     // Disabled if fields are empty
                 }
             }
-            .sheet(isPresented: $showingAddCluster, onDismiss: {
-                // selected folder updated with a new folder
-                if let newFolder = newFolderCreated {
-                    selectedFolder = newFolder
-                    newFolderCreated = nil
-                }
-            }) {
-                // binding to save the new folder created
-                AddCluster()
-            }
         }
     }
     
@@ -180,7 +171,11 @@ struct AddTree: View {
         
         newTree.folder = selectedFolder
         
-        modelContext.insert(newTree)
+        modelContext.insert(newTree) // inserting the new tree in the modelcontext
+        
+        folder.trees.append(newTree) // inserting the new tree in the tree array of the folder
+        
+        modelContext.insert(folder) // folder updated
         
         do {
             try modelContext.save()
