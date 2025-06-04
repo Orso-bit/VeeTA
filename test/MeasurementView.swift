@@ -9,47 +9,31 @@ import SwiftUI
 import SwiftData
 
 struct MeasurementView: View {
-    
-    @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) private var dismiss
-    @Bindable var tree: Tree
-    
-    
-    @State private var showingHeightMeasurement = false
-    @State private var showingLengthMeasurement = false
-    @State private var showingDiameterMeasurement = false
-    @State private var showingClinometerMeasurement = false
-    @State private var showingMeasurementHistory = false
-    @State private var showingLengthHistory = false
-    @State private var showingDiameterHistory = false
-    @State private var showingClinometerHistory = false
-    
+
+    let tree: Tree
     
     var body: some View {
         
         VStack{
-            
-        }
-        /*
-        VStack{
             HStack{
-                
+ 
                     ZStack{
                         RoundedRectangle(cornerRadius: 15)
                             .frame(height:100)
-                            //.foregroundStyle(.accent)
+                            .foregroundStyle(.accent)
                         
                         VStack{
                             Image(systemName: "ruler.fill")
                                 .foregroundStyle(.white)
                             
-                            VStack{
-                                Text(tree.height)
+                                VStack{
+                                    Text(tree.wrappedHeight + "m")
                                         .lineLimit(1)
                                         .font(.title)
                                         .fontWeight(.regular)
                                         .foregroundColor(Color.white)
                                 }
+                            
                             
                             Text("height")
                                 .font(.title3)
@@ -69,20 +53,15 @@ struct MeasurementView: View {
                         VStack{
                             Image(systemName: "ruler.fill")
                                 .foregroundStyle(.white)
-                            if let currentLength = tree.currentLength{
-                                VStack{
-                                    Text(currentLength)
-                                        .lineLimit(1)
-                                        .font(.title)
-                                        .fontWeight(.regular)
-                                        .foregroundColor(Color.white)
-                                }
-                            } else {
-                                Text ("unknown")
+                            
+                            VStack{
+                                Text(tree.wrappedLength + "m")
+                                    .lineLimit(1)
                                     .font(.title)
                                     .fontWeight(.regular)
                                     .foregroundColor(Color.white)
                             }
+                            
                             Text("trunk diameter")
                                 .font(.title3)
                                 .fontWeight(.thin)
@@ -104,20 +83,15 @@ struct MeasurementView: View {
                     VStack{
                         Image(systemName: "angle")
                             .foregroundStyle(.white)
-                        if let currentInclination = tree.currentInclination{
-                            VStack{
-                                Text(currentInclination)
-                                    .lineLimit(1)
-                                    .font(.title)
-                                    .fontWeight(.regular)
-                                    .foregroundColor(Color.white)
-                            }
-                        } else {
-                            Text ("unknown")
+                        
+                        VStack{
+                            Text(tree.wrappedInclination + "°")
+                                .lineLimit(1)
                                 .font(.title)
                                 .fontWeight(.regular)
                                 .foregroundColor(Color.white)
                         }
+                        
                         Text("inclination")
                             .font(.title3)
                             .fontWeight(.thin)
@@ -135,20 +109,15 @@ struct MeasurementView: View {
                     VStack{
                         Image(systemName: "leaf.fill")
                             .foregroundStyle(.white)
-                        if let currentProjection = tree.currentDiameter{
-                            VStack{
-                                Text(currentProjection)
-                                    .lineLimit(1)
-                                    .font(.title)
-                                    .fontWeight(.regular)
-                                    .foregroundColor(Color.white)
-                            }
-                        } else {
-                            Text ("unknown")
+                        
+                        VStack{
+                            Text(tree.wrappedDiameter + "m²")
+                                .lineLimit(1)
                                 .font(.title)
                                 .fontWeight(.regular)
                                 .foregroundColor(Color.white)
                         }
+                        
                         Text("crown projection")
                             .font(.title3)
                             .fontWeight(.thin)
@@ -159,8 +128,9 @@ struct MeasurementView: View {
                 }
             }
         }
-         */
+         
     }
 }
-
-#Preview { /*MeasurementView()*/ }
+/*
+ #Preview { }
+ */

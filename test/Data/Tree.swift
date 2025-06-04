@@ -39,6 +39,20 @@ class Tree: Identifiable {
     var diameter: Double
     var diameterDate: Date
     
+    //i wrap del mc donald
+    var wrappedLength: String {
+        return String(format: "%.2f", length)
+    }
+    var wrappedHeight: String {
+        return String(format: "%.2f", height)
+    }
+    var wrappedDiameter: String {
+        return String(format: "%.2f", diameter)
+    }
+    var wrappedInclination: String {
+        return String(format: "%.2f", inclination)
+    }
+    
     init(
         name: String,
         specie: String,
