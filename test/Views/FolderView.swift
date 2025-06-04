@@ -48,9 +48,10 @@ struct FolderView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingAddTree) {
-                AddTree(mapIsSelected: $mapIsSelected, folder: folder)
+            .fullScreenCover(isPresented: $showingAddTree) {
+                AddTree(folder: folder)
             }
+            
         }
     }
     

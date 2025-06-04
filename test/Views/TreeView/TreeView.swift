@@ -107,7 +107,7 @@ struct TreeView: View {
                     }
                 }
             }
-            .navigationTitle("Tree")
+            .navigationTitle(tree.name)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button{

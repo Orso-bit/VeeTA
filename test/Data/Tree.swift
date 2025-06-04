@@ -19,6 +19,7 @@ class Tree: Identifiable {
     var specie: String
     var extraNotes: String
     var createdAt: Date
+    var lastModified: Date
     
     var latitude: Double
     var longitude: Double
@@ -38,6 +39,21 @@ class Tree: Identifiable {
     // tree projection
     var diameter: Double
     var diameterDate: Date
+    
+    
+    //PAST MEASUREMENTS
+    var pastLenghts: [Double] = []
+    var pastLenghtsDate: [Date] = []
+    
+    var pastHeights: [Double] = []
+    var pastHeightsDate: [Date] = []
+    
+    var pastDiameters: [Double] = []
+    var pastDiametersDate: [Date] = []
+    
+    var pastInclinations: [Double] = []
+    var pastInclinationsDate: [Date] = []
+    
     
     //i wrap del mc donald
     var wrappedLength: String {
@@ -73,6 +89,8 @@ class Tree: Identifiable {
         self.specie = specie
         self.extraNotes = extraNotes ?? ""
         self.createdAt = Date.now
+        self.lastModified = Date.now
+        
         self.latitude = latitude ?? 00.0
         self.longitude = longitude ?? 00.0
         
