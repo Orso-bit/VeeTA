@@ -17,6 +17,7 @@ struct TreeView: View {
     @Bindable var tree: Tree
     
     var body: some View {
+        /*
         NavigationStack {
             ScrollView {
                 
@@ -70,5 +71,111 @@ struct TreeView: View {
                 .padding(.vertical,25)
             }
         }
+        */
+        NavigationView{
+                
+            ScrollView(showsIndicators: false){
+                
+                Divider()
+                
+                VStack(spacing:20){
+                    
+                    HStack{
+                        Text("CLUSTER")
+                          
+                        Spacer()
+                        
+                        Text("\(tree.name)")
+                            .fontWeight(.light)
+                        
+                    }.padding(.horizontal,25)
+                    
+                    HStack{
+                        Text("SPECIES")
+                          
+                        Spacer()
+                        
+                        Text("\(tree.specie)")
+                            .fontWeight(.light)
+                        
+                    }.padding(.horizontal,25)
+                    
+                    HStack{
+                        Text("ADDED")
+                          
+                        Spacer()
+                        
+                        Text(tree.createdAt.formatted())
+                            .fontWeight(.light)
+                        
+                    }.padding(.horizontal,25)
+                    
+                    HStack{
+                        Text("LAST MODIFIED")
+                          
+                        Spacer()
+                        
+                        Text(tree.createdAt.formatted())
+                            .fontWeight(.light)
+                        //DA MODIFICARE!!! AL MOMENTO NON ESISTE LAST MODIFIED COME PARAMETRO
+                        
+                    }.padding(.horizontal,25)
+                    
+
+                }
+                .padding(.vertical,25)
+                
+                
+                MeasurementView(tree: tree)
+                    .padding(.horizontal,10)
+                    .padding(.vertical,25)
+                
+                
+                VStack(spacing:5){
+                    HStack{
+                        Text("Notes")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.accent)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 25)
+                    
+                    Text("\(tree.extraNotes)")
+                        .padding()
+                        .background(.gray.opacity(0.3))
+                        .clipShape(RoundedRectangle(cornerRadius:30))
+                        .padding(.horizontal,20)
+                }
+            }
+            .navigationTitle("Tree")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button{
+                        //selectedTreeToEdit = tree
+                    } label: {
+                        Image(systemName: "pencil")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button{
+                        //mapIsSelected = true
+                    } label: {
+                        Image(systemName: "map.fill")
+                    }
+                }
+            }
+        }
+        /*
+        .sheet(item: $selectedTreeToEdit) { tree in
+            NavigationStack {
+                EditTreeView(tree: tree)
+                
+            }
+        }
+        .sheet(isPresented: $mapIsSelected){
+            MapView()
+        }
+         */
     }
 }
