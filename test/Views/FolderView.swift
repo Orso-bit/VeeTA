@@ -49,7 +49,7 @@ struct FolderView: View {
                 }
             }
             .fullScreenCover(isPresented: $showingAddTree) {
-                AddTree(folder: folder)
+                AddTree(mapIsSelected: $mapIsSelected, folder: folder)
             }
             
         }
