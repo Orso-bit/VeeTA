@@ -13,6 +13,7 @@ struct TreeView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Query private var folders: [TreeFolder]
+    @State private var mapIsSelected: Bool = false
     
     @Bindable var tree: Tree
     
@@ -117,7 +118,7 @@ struct TreeView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button{
-                        //mapIsSelected = true
+                        mapIsSelected = true
                     } label: {
                         Image(systemName: "map.fill")
                     }
@@ -131,9 +132,9 @@ struct TreeView: View {
                 
             }
         }
-        .sheet(isPresented: $mapIsSelected){
-            MapView()
-        }
          */
+        .sheet(isPresented: $mapIsSelected){
+            MapView(tree: tree)
+        }
     }
 }
