@@ -22,7 +22,7 @@ struct TreeView: View {
                 
             ScrollView(showsIndicators: false){
                 
-                Divider()
+                //Divider()
                 
                 VStack(spacing:20){
                     
@@ -86,11 +86,24 @@ struct TreeView: View {
                     }
                     .padding(.horizontal, 25)
                     
-                    Text("\(tree.extraNotes)")
-                        .padding()
-                        .background(.gray.opacity(0.3))
-                        .clipShape(RoundedRectangle(cornerRadius:30))
-                        .padding(.horizontal,20)
+                    ZStack{
+                        RoundedRectangle(cornerRadius:20)
+                            .fill(Color.gray.opacity(0.3))
+                            .frame(minHeight:300)
+                            .padding(.horizontal,20)
+                        
+                        VStack{
+                            Text("\(tree.extraNotes)")
+                                .frame(alignment: .leading)
+                                .padding()
+                            /*
+                             .background(.gray.opacity(0.3))
+                             .clipShape(RoundedRectangle(cornerRadius:30))
+                             */
+                                .padding(.horizontal,20)
+                            Spacer()
+                        }
+                    }
                 }
             }
             .navigationTitle("Tree")

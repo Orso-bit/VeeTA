@@ -27,9 +27,11 @@ struct FolderView: View {
                         VStack(alignment: .leading) {
                             Text(tree.name).font(.headline)
                             Text(tree.specie).font(.subheadline)
+                            /*
                             if !tree.extraNotes.isEmpty {
                                 Text(tree.extraNotes).font(.caption)
                             }
+                             */
                         }
                     }
                 }
