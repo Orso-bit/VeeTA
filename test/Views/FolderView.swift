@@ -15,6 +15,7 @@ struct FolderView: View {
     @Environment(\.modelContext) private var modelContext
     // @Query private var trees: [TreeFolder] // It allows to access every data of trees but we have to filter based on clusters
     @State private var showingAddTree = false
+    @State private var mapIsSelected: Bool = false
     let folder: TreeFolder
     
     var body: some View {
@@ -48,7 +49,7 @@ struct FolderView: View {
                 }
             }
             .sheet(isPresented: $showingAddTree) {
-                AddTree(folder: folder)
+                AddTree(mapIsSelected: $mapIsSelected, folder: folder)
             }
         }
     }

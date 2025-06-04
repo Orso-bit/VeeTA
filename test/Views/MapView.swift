@@ -15,6 +15,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
 
     @Published var location: CLLocation?
+    @Published var isAuthorized = false
 
     override init() {
         super.init()

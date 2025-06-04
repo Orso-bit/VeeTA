@@ -29,6 +29,10 @@ struct AddTree: View {
     @State private var treeSpecie = ""
     @State private var treeExtraNotes = ""
     
+    @Binding var mapIsSelected: Bool
+    
+    @StateObject private var locationManager = LocationManager()
+    
     let folder: TreeFolder
     
     var body: some View {
@@ -42,29 +46,15 @@ struct AddTree: View {
                     TextField("Note extra", text: $treeExtraNotes, axis: .vertical)
                         .lineLimit(3...6)
                 }
-                /*
-                // Cluster inserting
-                Section("Cluster") {
-                    if folders.isEmpty {
-                        Button("Create a new cluster") {
-                            showingAddCluster = true
-                        }
-                    } else {
-                        Picker("Cluster Selection", selection: $selectedFolder) {
-                            Text("No Cluster").tag(nil as TreeFolder?)
-                            ForEach(folders, id: \.self) { folder in
-                                Text(folder.name).tag(folder as TreeFolder?)
+                // Location
+                Section("Location") {
+                    Toggle("Show tree location", isOn: $mapIsSelected)
+                        .onChange(of: mapIsSelected) { oldValue, newValue in
+                            if newValue {
+                                locationManager.requestAuthorization()
                             }
                         }
-                        
-                        Button("Create new cluster") {
-                            showingAddCluster = true
-                        }
-                    }
-                }*/
-                
-                // Location
-                
+                }
                 // Altimeter
                 Section("Heigth Measurement") {
                     Button(action: {
