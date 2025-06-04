@@ -28,6 +28,8 @@ struct AddTree: View {
     @State private var treeName = ""
     @State private var treeSpecie = ""
     @State private var treeExtraNotes = ""
+    @State private var treeLatitude: Double = 0.0
+    @State private var treeLongitude: Double = 0.0
     
     @Binding var mapIsSelected: Bool
     
@@ -47,11 +49,16 @@ struct AddTree: View {
                         .lineLimit(3...6)
                 }
                 // Location
+                // It's slow to update coordinates
                 Section("Location") {
                     Toggle("Show tree location", isOn: $mapIsSelected)
                         .onChange(of: mapIsSelected) { oldValue, newValue in
                             if newValue {
                                 locationManager.requestAuthorization()
+                                if let location = locationManager.location {
+                                    treeLatitude = location.coordinate.latitude
+                                    treeLongitude = location.coordinate.longitude
+                                }
                             }
                         }
                 }
@@ -151,8 +158,8 @@ struct AddTree: View {
             name: treeName,
             specie: treeSpecie,
             extraNotes: treeExtraNotes,
-            latitude: 0.0,
-            longitude: 0.0,
+            latitude: treeLatitude,
+            longitude: treeLongitude,
             inclination: 0.0,
             length: 0.0,
             height: 0.0,
@@ -169,6 +176,7 @@ struct AddTree: View {
         
         do {
             try modelContext.save()
+            mapIsSelected = false  // <-- turn the toggle off
             dismiss()
         } catch {
             print("Errore nel salvataggio: \(error)")

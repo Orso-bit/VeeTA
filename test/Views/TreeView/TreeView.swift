@@ -134,7 +134,7 @@ struct TreeView: View {
         }
          */
         .sheet(isPresented: $mapIsSelected){
-            MapView(tree: tree)
+            MapView(treeLatitude: $tree.latitude, treeLongitude: $tree.longitude)
         }
     }
 }

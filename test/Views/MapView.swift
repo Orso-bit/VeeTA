@@ -38,17 +38,26 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 }
 
 struct MapView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) private var dismiss
-
-    @StateObject private var locationManager = LocationManager()
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // Default to San Francisco
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    )
+    // var changed in TreeView
+    @Binding var treeLatitude: Double
+    @Binding var treeLongitude: Double
     
-    let tree: Tree?
-
+    @State private var region: MKCoordinateRegion
+    
+    @StateObject private var locationManager = LocationManager()
+    
+    init(treeLatitude: Binding<Double>, treeLongitude: Binding<Double>) {
+        self._treeLatitude = treeLatitude
+        self._treeLongitude = treeLongitude
+        
+        let initialCoordinate = CLLocationCoordinate2D(latitude: treeLatitude.wrappedValue, longitude: treeLongitude.wrappedValue)
+        
+        _region = State(initialValue: MKCoordinateRegion(
+            center: initialCoordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        ))
+    }
+    
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Map(coordinateRegion: $region, showsUserLocation: true)
@@ -58,6 +67,14 @@ struct MapView: View {
                     if let location = locationManager.location {
                         region.center = location.coordinate
                     }
+                }
+                // latitudes updated
+                .onChange(of: region.center.latitude) { oldLatitude, newLatitude in
+                    treeLatitude = newLatitude
+                }
+                // longitudes updated
+                .onChange(of: region.center.longitude) { oldLongitude, newLongitude in
+                    treeLongitude = newLongitude
                 }
             
             Button(action: {
@@ -77,14 +94,3 @@ struct MapView: View {
         }
     }
 }
-
-#Preview {
-    let modelContainer = try! ModelContainer(
-        for: TreeFolder.self, Tree.self,
-        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-    )
-    
-    return MapView(tree: nil)
-        .modelContainer(modelContainer)
-}
-
