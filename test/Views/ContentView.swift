@@ -43,7 +43,7 @@ struct ContentView: View {
                 // OK MA BISOGNA CREARE SOLO IL CLUSTER E UNA VOLTA LI' GLI ALBERI
             }
             // Add Cluster View
-            .sheet(isPresented: $showingAddCluster) {
+            .fullScreenCover(isPresented: $showingAddCluster) {
                 AddCluster()
             }
         }
