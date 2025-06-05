@@ -1,0 +1,22 @@
+//
+//  LenghtView.swift
+//  test
+//
+//  Created by Vincenzo Salzano on 04/06/25.
+//
+
+import SwiftUI
+import ARKit
+import RealityKit
+
+struct LengthView: View {
+    var body: some View {
+        //Mostra la fotocamera con ArKit
+        CustomArViewRepresentable()
+            .ignoresSafeArea()
+    }
+}
+
+#Preview {
+    LengthView()
+}
