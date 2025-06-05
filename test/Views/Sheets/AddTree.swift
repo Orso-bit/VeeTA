@@ -70,10 +70,90 @@ struct AddTree: View {
                 
             
                 Section("Measurements"){
-                    TextField("Tree Height", value: $height, formatter: NumberFormatter())
-                    TextField("Trunk circumference", value: $length, formatter: NumberFormatter())
-                    TextField("Inclination angle", value: $inclination, formatter: NumberFormatter())
-                    TextField("Crown projection", value: $diameter, formatter: NumberFormatter())
+                    
+                    HStack{
+                        TextField("Tree height", text: Binding(
+                            get: {
+                                // Show empty if value is 0.0
+                                height == 0.0 ? "" : String(height)
+                            },
+                            set: { newValue in
+                                // Try to convert input to Double
+                                if let value = Double(newValue) {
+                                    height = value
+                                } else {
+                                    // Optional: Reset or ignore invalid input
+                                    height = 0.0
+                                }
+                            }
+                        ))
+                        
+                        .keyboardType(.decimalPad)
+                        Text ("m")
+                    }
+                        
+                    HStack{
+                        TextField("Trunk circumference", text: Binding(
+                            get: {
+                                // Show empty if value is 0.0
+                                length == 0.0 ? "" : String(length)
+                            },
+                            set: { newValue in
+                                // Try to convert input to Double
+                                if let value = Double(newValue) {
+                                    length = value
+                                } else {
+                                    // Optional: Reset or ignore invalid input
+                                    length = 0.0
+                                }
+                            }
+                        ))
+                        .keyboardType(.decimalPad)
+                        Text ("m")
+                    }
+                    
+                    HStack{
+                        TextField("Inclination angle", text: Binding(
+                            get: {
+                                // Show empty if value is 0.0
+                                inclination == 0.0 ? "" : String(inclination)
+                            },
+                            set: { newValue in
+                                // Try to convert input to Double
+                                if let value = Double(newValue) {
+                                    inclination = value
+                                } else {
+                                    // Optional: Reset or ignore invalid input
+                                    inclination = 0.0
+                                }
+                            }
+                        ))
+                        
+                        .keyboardType(.decimalPad)
+                        Text ("°")
+                    }
+                    
+                    HStack{
+                        TextField("Crown projection", text: Binding(
+                            get: {
+                                // Show empty if value is 0.0
+                                diameter == 0.0 ? "" : String(diameter)
+                            },
+                            set: { newValue in
+                                // Try to convert input to Double
+                                if let value = Double(newValue) {
+                                    diameter = value
+                                } else {
+                                    // Optional: Reset or ignore invalid input
+                                    diameter = 0.0
+                                }
+                            }
+                        ))
+                        
+                        .keyboardType(.decimalPad)
+                        Text ("m²")
+                    }
+                    
                 }
                 
                 // Altimeter
@@ -147,17 +227,17 @@ struct AddTree: View {
                     saveTree()
                 }
             }
-            .navigationTitle("Aggiungi Albero")
+            .navigationTitle("Add tree")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Annulla") {
+                    Button("Back") {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Salva") {
+                    Button("Save") {
                         saveTree()
                     }
                     // Disabled if fields are empty
