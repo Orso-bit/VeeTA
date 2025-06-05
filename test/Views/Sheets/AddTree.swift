@@ -10,6 +10,8 @@ import AVFoundation
 import RealityKit
 import SwiftData
 import SwiftUI
+import CoreLocation
+
 
 struct AddTree: View {
     
