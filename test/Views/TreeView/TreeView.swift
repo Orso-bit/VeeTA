@@ -14,6 +14,7 @@ struct TreeView: View {
     @Environment(\.dismiss) private var dismiss
     @Query private var folders: [TreeFolder]
     @State private var mapIsSelected: Bool = false
+    @State private var showingEditTree: Bool = false
     
     @Bindable var tree: Tree
     
@@ -62,9 +63,8 @@ struct TreeView: View {
                           
                         Spacer()
                         
-                        Text(tree.createdAt.formatted())
+                        Text(tree.lastModified.formatted())
                             .fontWeight(.light)
-                        //DA MODIFICARE!!! AL MOMENTO NON ESISTE LAST MODIFIED COME PARAMETRO
                         
                     }.padding(.horizontal,25)
                     
@@ -72,120 +72,7 @@ struct TreeView: View {
                 }
                 .padding(.vertical,25)
                 
-                VStack{
-                    HStack{
-         
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(height:100)
-                                    .foregroundStyle(.accent)
-                                
-                                VStack{
-                                    Image(systemName: "ruler.fill")
-                                        .foregroundStyle(.white)
-                                    
-                                        VStack{
-                                            Text(tree.wrappedHeight + "m")
-                                                .lineLimit(1)
-                                                .font(.title)
-                                                .fontWeight(.regular)
-                                                .foregroundColor(Color.white)
-                                        }
-                                    
-                                    
-                                    Text("height")
-                                        .font(.title3)
-                                        .fontWeight(.thin)
-                                        .foregroundColor(Color.white)
-                                }
-                                
-                            }
-                        
-                        
-                        
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(height:100)
-                                    .foregroundStyle(.accent)
-                                
-                                VStack{
-                                    Image(systemName: "ruler.fill")
-                                        .foregroundStyle(.white)
-                                    
-                                    VStack{
-                                        Text(tree.wrappedLength + "m")
-                                            .lineLimit(1)
-                                            .font(.title)
-                                            .fontWeight(.regular)
-                                            .foregroundColor(Color.white)
-                                    }
-                                    
-                                    Text("trunk diameter")
-                                        .font(.title3)
-                                        .fontWeight(.thin)
-                                        .foregroundColor(Color.white)
-                                }
-                                
-                                
-                            }
-                        
-                        
-                    }
-                    HStack{
-                        //if let current
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(height:100)
-                                .foregroundStyle(.accent)
-                            
-                            VStack{
-                                Image(systemName: "angle")
-                                    .foregroundStyle(.white)
-                                
-                                VStack{
-                                    Text(tree.wrappedInclination + "°")
-                                        .lineLimit(1)
-                                        .font(.title)
-                                        .fontWeight(.regular)
-                                        .foregroundColor(Color.white)
-                                }
-                                
-                                Text("inclination")
-                                    .font(.title3)
-                                    .fontWeight(.thin)
-                                    .foregroundColor(Color.white)
-                            }
-                    
-                            
-                        }
-                        
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(height:100)
-                                .foregroundStyle(.accent)
-                            
-                            VStack{
-                                Image(systemName: "leaf.fill")
-                                    .foregroundStyle(.white)
-                                
-                                VStack{
-                                    Text(tree.wrappedDiameter + "m²")
-                                        .lineLimit(1)
-                                        .font(.title)
-                                        .fontWeight(.regular)
-                                        .foregroundColor(Color.white)
-                                }
-                                
-                                Text("crown projection")
-                                    .font(.title3)
-                                    .fontWeight(.thin)
-                                    .foregroundColor(Color.white)
-                            }
-                    
-                            
-                        }
-                    }
-                }
+                MeasurementView(tree: tree)
                     .padding(.horizontal,10)
                     .padding(.vertical,25)
                 
@@ -224,7 +111,7 @@ struct TreeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button{
-                        //selectedTreeToEdit = tree
+                        showingEditTree = true
                     } label: {
                         Image(systemName: "pencil")
                     }
@@ -238,7 +125,9 @@ struct TreeView: View {
                 }
             }
         }
-        
+        .sheet(isPresented: $showingEditTree) {
+            EditTree(tree: tree, mapIsSelected: $mapIsSelected)
+        }
         .sheet(isPresented: $mapIsSelected){
             MapView(treeLatitude: $tree.latitude, treeLongitude: $tree.longitude)
         }

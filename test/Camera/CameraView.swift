@@ -30,32 +30,63 @@ struct CustomArViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {}
 }
 
-
 struct CameraView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var selectedIndex = 0
     
+    // Parametri per gestire il context da cui è chiamato
+    var onMeasurementTaken: ((MeasurementType, Double) -> Void)?
+    var sourceContext: String = "unknown"
+    
+    enum MeasurementType {
+        case height, length, diameter, inclination
+    }
+    
     var body: some View {
-        VStack {
-            //TabView con le varie feature da selezionare
-            TabView(selection: $selectedIndex) {
-                HeightView().tag(0) //Si apre con questa
-                LengthView().tag(1)
-                ClinometerView().tag(2)
-                ProiectionView().tag(3)
+        NavigationStack {
+            VStack {
+                //TabView con le varie feature da selezionare
+/*                TabView(selection: $selectedIndex) {
+                    HeightView(onMeasurementTaken: { value in
+                        onMeasurementTaken?(.height, value)
+                        dismiss()
+                    }).tag(0) //Si apre con questa
+                    LengthView(onMeasurementTaken: { value in
+                        onMeasurementTaken?(.length, value)
+                        dismiss()
+                    }).tag(1)
+                    ClinometerView(onMeasurementTaken: { value in
+                        onMeasurementTaken?(.inclination, value)
+                        dismiss()
+                    }).tag(2)
+                    ProiectionView(onMeasurementTaken: { value in
+                        onMeasurementTaken?(.diameter, value)
+                        dismiss()
+                    }).tag(3)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+*/
+                HStack {
+                    ForEach(0..<4) { index in
+                        Circle()
+                            .fill(index == selectedIndex ? Color.white : Color.gray)
+                            .frame(width: 10, height: 10)
+                            .onTapGesture {
+                                selectedIndex = index
+                            }
+                    }
+                }
+                .padding(.top, 10)
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-
-            HStack {
-                ForEach(0..<4) { index in
-                    Circle()
-                        .fill(index == selectedIndex ? Color.white : Color.gray)
-                        .frame(width: 10, height: 10)
-                        .onTapGesture {
-                            selectedIndex = index
-                        }
+            .navigationTitle("Measurements")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Back") {
+                        dismiss()
+                    }
                 }
             }
-            .padding(.top, 10)
         }
     }
 }

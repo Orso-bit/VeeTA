@@ -10,8 +10,6 @@ import AVFoundation
 import RealityKit
 import SwiftData
 import SwiftUI
-import CoreLocation
-
 
 struct AddTree: View {
     
@@ -26,6 +24,7 @@ struct AddTree: View {
     @State private var showingLengthMeasurement = false
     @State private var showingDiameterMeasurement = false
     @State private var showingClinometerMeasurement = false
+    @State private var showingCamera = false
     
     @State private var treeName = ""
     @State private var treeSpecie = ""
@@ -158,6 +157,23 @@ struct AddTree: View {
                     
                 }
                 
+                // Camera Measurements
+                Section("Camera Measurements") {
+                    Button(action: {
+                        showingCamera = true
+                    }) {
+                        HStack {
+                            Image(systemName: "camera")
+                                .foregroundColor(.blue)
+                            Text("Open Camera for Measurements")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                        }
+                    }
+                }
+                
                 // Altimeter
                 Section("Height Measurement") {
                     Button(action: {
@@ -229,6 +245,14 @@ struct AddTree: View {
                     saveTree()
                 }
             }
+            .fullScreenCover(isPresented: $showingCamera) {
+                CameraView(
+                    onMeasurementTaken: { measurementType, value in
+                        handleMeasurement(type: measurementType, value: value)
+                    },
+                    sourceContext: "AddTree"
+                )
+            }
             .navigationTitle("Add tree")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -245,6 +269,19 @@ struct AddTree: View {
                     // Disabled if fields are empty
                 }
             }
+        }
+    }
+    
+    private func handleMeasurement(type: CameraView.MeasurementType, value: Double) {
+        switch type {
+        case .height:
+            height = value
+        case .length:
+            length = value
+        case .diameter:
+            diameter = value
+        case .inclination:
+            inclination = value
         }
     }
     
