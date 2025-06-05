@@ -48,6 +48,9 @@ struct TreeView: View {
                         
                     }.padding(.horizontal,25)
                     
+                    Text("\(tree.latitude)")
+                    Text("\(tree.longitude)")
+                    
                     HStack{
                         Text("ADDED")
                           

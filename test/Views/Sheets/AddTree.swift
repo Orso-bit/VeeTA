@@ -37,6 +37,7 @@ struct AddTree: View {
     @State private var diameter: Double = 0.0
     @State private var inclination: Double = 0.0
     
+    @Binding var switchToggle: Bool
     @Binding var mapIsSelected: Bool
     
     @StateObject private var locationManager = LocationManager()
@@ -57,17 +58,21 @@ struct AddTree: View {
                 // Location
                 // It's slow to update coordinates
                 Section("Location") {
-                    Toggle("Save tree location", isOn: $mapIsSelected)
-                        .onChange(of: mapIsSelected) { oldValue, newValue in
-                            if newValue {
-                                locationManager.requestAuthorization()
-                                if let location = locationManager.location {
-                                    treeLatitude = location.coordinate.latitude
-                                    treeLongitude = location.coordinate.longitude
+                            Toggle("Save tree location", isOn: $switchToggle)
+                                .onChange(of: switchToggle) { _, newValue in
+                                    if newValue {
+                                        locationManager.requestAuthorization()
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                            if let location = locationManager.location {
+                                                treeLatitude = location.coordinate.latitude
+                                                treeLongitude = location.coordinate.longitude
+                                            } else {
+                                                print("⚠️ Nessuna posizione disponibile.")
+                                            }
+                                        }
+                                    }
                                 }
-                            }
                         }
-                }
                 
             
                 Section("Measurements"){
@@ -309,7 +314,7 @@ struct AddTree: View {
         
         do {
             try modelContext.save()
-            mapIsSelected = false  // <-- turn the toggle off
+            switchToggle = false  // <-- turn the toggle off
             dismiss()
         } catch {
             print("Errore nel salvataggio: \(error)")

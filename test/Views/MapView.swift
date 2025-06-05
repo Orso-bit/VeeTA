@@ -13,25 +13,25 @@ import SwiftData
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
-
+    
     @Published var location: CLLocation?
     @Published var isAuthorized = false
-
+    
     override init() {
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
     }
-
+    
     func requestAuthorization() {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         location = locations.first
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location error: \(error.localizedDescription)")
     }
@@ -63,18 +63,7 @@ struct MapView: View {
             Map(coordinateRegion: $region, showsUserLocation: true)
                 .ignoresSafeArea()
                 .onAppear {
-                    locationManager.requestAuthorization()
-                    if let location = locationManager.location {
-                        region.center = location.coordinate
-                    }
-                }
-                // latitudes updated
-                .onChange(of: region.center.latitude) { oldLatitude, newLatitude in
-                    treeLatitude = newLatitude
-                }
-                // longitudes updated
-                .onChange(of: region.center.longitude) { oldLongitude, newLongitude in
-                    treeLongitude = newLongitude
+                    region.center = CLLocationCoordinate2D(latitude: treeLatitude, longitude: treeLongitude)
                 }
             
             Button(action: {

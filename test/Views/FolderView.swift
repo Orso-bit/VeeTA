@@ -16,6 +16,7 @@ struct FolderView: View {
     // @Query private var trees: [TreeFolder] // It allows to access every data of trees but we have to filter based on clusters
     @State private var showingAddTree = false
     @State private var mapIsSelected: Bool = false
+    @State private var switchToggle: Bool = false
     let folder: TreeFolder
     
     var body: some View {
@@ -49,7 +50,7 @@ struct FolderView: View {
                 }
             }
             .fullScreenCover(isPresented: $showingAddTree) {
-                AddTree(mapIsSelected: $mapIsSelected, folder: folder)
+                AddTree(switchToggle: $switchToggle, mapIsSelected: $mapIsSelected, folder: folder)
             }
             
         }
