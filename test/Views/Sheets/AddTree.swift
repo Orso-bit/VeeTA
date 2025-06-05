@@ -31,6 +31,11 @@ struct AddTree: View {
     @State private var treeLatitude: Double = 0.0
     @State private var treeLongitude: Double = 0.0
     
+    @State private var height: Double = 0.0
+    @State private var length: Double = 0.0
+    @State private var diameter: Double = 0.0
+    @State private var inclination: Double = 0.0
+    
     @Binding var mapIsSelected: Bool
     
     @StateObject private var locationManager = LocationManager()
@@ -42,16 +47,16 @@ struct AddTree: View {
             // VTA
             Form {
                 // General information
-                Section("Informazioni Albero") {
-                    TextField("Nome albero", text: $treeName)
+                Section("General information") {
+                    TextField("Name", text: $treeName)
                     TextField("Specie", text: $treeSpecie)
-                    TextField("Note extra", text: $treeExtraNotes, axis: .vertical)
+                    TextField("Notes", text: $treeExtraNotes, axis: .vertical)
                         .lineLimit(3...6)
                 }
                 // Location
                 // It's slow to update coordinates
                 Section("Location") {
-                    Toggle("Show tree location", isOn: $mapIsSelected)
+                    Toggle("Save tree location", isOn: $mapIsSelected)
                         .onChange(of: mapIsSelected) { oldValue, newValue in
                             if newValue {
                                 locationManager.requestAuthorization()
@@ -62,8 +67,17 @@ struct AddTree: View {
                             }
                         }
                 }
+                
+            
+                Section("Measurements"){
+                    TextField("Tree Height", value: $height, formatter: NumberFormatter())
+                    TextField("Trunk circumference", value: $length, formatter: NumberFormatter())
+                    TextField("Inclination angle", value: $inclination, formatter: NumberFormatter())
+                    TextField("Crown projection", value: $diameter, formatter: NumberFormatter())
+                }
+                
                 // Altimeter
-                Section("Heigth Measurement") {
+                Section("Height Measurement") {
                     Button(action: {
                         showingHeightMeasurement = true
                     }) {
@@ -160,10 +174,10 @@ struct AddTree: View {
             extraNotes: treeExtraNotes,
             latitude: treeLatitude,
             longitude: treeLongitude,
-            inclination: 0.0,
-            length: 0.0,
-            height: 0.0,
-            diameter: 0.0
+            inclination: inclination,
+            length: length,
+            height: height,
+            diameter: diameter
         )
         
         newTree.folder = selectedFolder
