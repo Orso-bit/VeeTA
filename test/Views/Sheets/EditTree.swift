@@ -36,7 +36,7 @@ struct EditTree: View {
     @State private var diameter: Double = 0.0
     @State private var inclination: Double = 0.0
     
-    @Binding var mapIsSelected: Bool
+    @Binding var sheetIsOpen: Bool
     
     @StateObject private var locationManager = LocationManager()
     
@@ -53,8 +53,8 @@ struct EditTree: View {
                 
                 // Location
                 Section("Location") {
-                    Toggle("Save tree location", isOn: $mapIsSelected)
-                        .onChange(of: mapIsSelected) { oldValue, newValue in
+                    Toggle("Save tree location", isOn: $sheetIsOpen)
+                        .onChange(of: sheetIsOpen) { oldValue, newValue in
                             if newValue {
                                 locationManager.requestAuthorization()
                                 if let location = locationManager.location {
@@ -224,7 +224,7 @@ struct EditTree: View {
         inclination = tree.inclination
         
         // Imposta mapIsSelected se ci sono coordinate valide
-        mapIsSelected = tree.latitude != 0.0 || tree.longitude != 0.0
+        sheetIsOpen = tree.latitude != 0.0 || tree.longitude != 0.0
     }
     
     private func saveChanges() {
@@ -269,7 +269,7 @@ struct EditTree: View {
         
         do {
             try modelContext.save()
-            mapIsSelected = false
+            sheetIsOpen = false
             dismiss()
         } catch {
             print("Errore nel salvataggio delle modifiche: \(error)")

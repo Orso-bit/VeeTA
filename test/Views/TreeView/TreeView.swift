@@ -260,7 +260,7 @@ struct TreeView: View {
             }
         }
         .sheet(isPresented: $showingEditTree) {
-            EditTree(tree: tree, mapIsSelected: $mapIsSelected)
+            EditTree(tree: tree, sheetIsOpen: $showingEditTree)
         }
         .sheet(isPresented: $mapIsSelected){
             MapView(treeLatitude: $tree.latitude, treeLongitude: $tree.longitude)
