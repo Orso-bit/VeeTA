@@ -11,6 +11,9 @@ struct PastHeightsView: View {
     
     var tree: Tree
     
+    let barWidth: CGFloat = 40
+    let chartHeight: CGFloat = 200
+    
     //var heights : [Double] = [1.03, 1.04, 1.05]
     //var dates: [Date] = [Date(timeIntervalSinceNow: 10000), Date(timeIntervalSinceNow: 20000), Date(timeIntervalSinceNow: 30000)]
     
@@ -24,6 +27,31 @@ struct PastHeightsView: View {
             }
             
         }
+        
+        VStack{
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .bottom, spacing: 16) {
+                    ForEach(Array(tree.pastHeights.enumerated()), id: \.offset) { index, value in
+                        VStack {
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(.accent)
+                                .frame(
+                                    width: barWidth,
+                                    height: CGFloat(value / (tree.pastHeights.max() ?? 1)) * (chartHeight - 50)
+                                )
+                            
+                            Text(String(format: "%.1f", value) + "m")
+                                .font(.caption)
+                                .rotationEffect(.degrees(-45))
+                                .frame(width: barWidth, height: 30)
+                        }
+                    }
+                }
+                .padding()
+            }
+            .frame(height: chartHeight)
+        }
+        .padding()
         
     }
     
