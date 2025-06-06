@@ -305,6 +305,14 @@ struct AddTree: View {
         )
         
         newTree.folder = selectedFolder
+        newTree.pastHeights.append(height)
+        newTree.pastHeightsDate.append(.now)
+        newTree.pastLenghts.append(length)
+        newTree.pastLenghtsDate.append(.now)
+        newTree.pastDiameters.append(diameter)
+        newTree.pastDiametersDate.append(.now)
+        newTree.pastInclinations.append(inclination)
+        newTree.pastInclinationsDate.append(.now)
         
         modelContext.insert(newTree) // inserting the new tree in the modelcontext
         

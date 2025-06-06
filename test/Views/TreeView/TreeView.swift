@@ -95,7 +95,9 @@ struct TreeView: View {
                 
                 VStack{
                     HStack{
-         
+
+                        NavigationLink{PastHeightsView(tree: tree)}
+                        label:{
                             ZStack{
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(height:100)
@@ -105,13 +107,13 @@ struct TreeView: View {
                                     Image(systemName: "ruler.fill")
                                         .foregroundStyle(.white)
                                     
-                                        VStack{
-                                            Text(tree.wrappedHeight + "m")
-                                                .lineLimit(1)
-                                                .font(.title)
-                                                .fontWeight(.regular)
-                                                .foregroundColor(Color.white)
-                                        }
+                                    VStack{
+                                        Text(tree.wrappedHeight + "m")
+                                            .lineLimit(1)
+                                            .font(.title)
+                                            .fontWeight(.regular)
+                                            .foregroundColor(Color.white)
+                                    }
                                     
                                     
                                     Text("height")
@@ -121,7 +123,7 @@ struct TreeView: View {
                                 }
                                 
                             }
-                        
+                        }
                         
                         
                             ZStack{

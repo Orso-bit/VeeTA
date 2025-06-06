@@ -237,31 +237,31 @@ struct EditTree: View {
         
         // Salva le misurazioni precedenti se sono cambiate
         if tree.height != height {
-            tree.pastHeights.append(tree.height)
-            tree.pastHeightsDate.append(tree.measurementDate)
             tree.height = height
             tree.measurementDate = Date.now
+            tree.pastHeights.append(tree.height)
+            tree.pastHeightsDate.append(tree.measurementDate)
         }
         
         if tree.length != length {
-            tree.pastLenghts.append(tree.length)
-            tree.pastLenghtsDate.append(tree.lengthMeasurementDate)
             tree.length = length
             tree.lengthMeasurementDate = Date.now
+            tree.pastLenghts.append(tree.length)
+            tree.pastLenghtsDate.append(tree.lengthMeasurementDate)
         }
         
         if tree.diameter != diameter {
-            tree.pastDiameters.append(tree.diameter)
-            tree.pastDiametersDate.append(tree.diameterDate)
             tree.diameter = diameter
             tree.diameterDate = Date.now
+            tree.pastDiameters.append(tree.diameter)
+            tree.pastDiametersDate.append(tree.diameterDate)
         }
         
         if tree.inclination != inclination {
-            tree.pastInclinations.append(tree.inclination)
-            tree.pastInclinationsDate.append(tree.inclinationDate)
             tree.inclination = inclination
             tree.inclinationDate = Date.now
+            tree.pastInclinations.append(tree.inclination)
+            tree.pastInclinationsDate.append(tree.inclinationDate)
         }
         
         // Aggiorna la data di ultima modifica
