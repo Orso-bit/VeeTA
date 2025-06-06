@@ -48,6 +48,7 @@ struct TreeView: View {
                         
                     }.padding(.horizontal,25)
                     
+                    /*
                     HStack{
                         Text("LATITUDE")
                           
@@ -67,6 +68,7 @@ struct TreeView: View {
                             .fontWeight(.light)
                         
                     }.padding(.horizontal,25)
+                    */
                     
                     HStack{
                         Text("ADDED")
@@ -125,7 +127,8 @@ struct TreeView: View {
                             }
                         }
                         
-                        
+                        NavigationLink{PastLengthsView(tree: tree)}
+                        label:{
                             ZStack{
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(height:100)
@@ -151,62 +154,69 @@ struct TreeView: View {
                                 
                                 
                             }
-                        
+                        }
                         
                     }
                     HStack{
                         //if let current
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(height:100)
-                                .foregroundStyle(.accent)
-                            
-                            VStack{
-                                Image(systemName: "angle")
-                                    .foregroundStyle(.white)
+                        NavigationLink{PastInclinationView(tree: tree)}
+                        label:{
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 15)
+                                    .frame(height:100)
+                                    .foregroundStyle(.accent)
                                 
                                 VStack{
-                                    Text(tree.wrappedInclination + "°")
-                                        .lineLimit(1)
-                                        .font(.title)
-                                        .fontWeight(.regular)
+                                    Image(systemName: "angle")
+                                        .foregroundStyle(.white)
+                                    
+                                    VStack{
+                                        Text(tree.wrappedInclination + "°")
+                                            .lineLimit(1)
+                                            .font(.title)
+                                            .fontWeight(.regular)
+                                            .foregroundColor(Color.white)
+                                    }
+                                    
+                                    Text("inclination")
+                                        .font(.title3)
+                                        .fontWeight(.thin)
                                         .foregroundColor(Color.white)
                                 }
                                 
-                                Text("inclination")
-                                    .font(.title3)
-                                    .fontWeight(.thin)
-                                    .foregroundColor(Color.white)
+                                
                             }
-                    
-                            
                         }
                         
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(height:100)
-                                .foregroundStyle(.accent)
-                            
-                            VStack{
-                                Image(systemName: "leaf.fill")
-                                    .foregroundStyle(.white)
+                        NavigationLink{PastProjectionView(tree: tree)}
+                        label:{
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 15)
+                                    .frame(height:100)
+                                    .foregroundStyle(.accent)
                                 
                                 VStack{
-                                    Text(tree.wrappedDiameter + "m²")
-                                        .lineLimit(1)
-                                        .font(.title)
-                                        .fontWeight(.regular)
+                                    Image(systemName: "leaf.fill")
+                                        .foregroundStyle(.white)
+                                    
+                                    VStack{
+                                        Text(tree.wrappedDiameter + "m²")
+                                            .lineLimit(1)
+                                            .font(.title)
+                                            .fontWeight(.regular)
+                                            .foregroundColor(Color.white)
+                                    }
+                                    
+                                    Text("crown projection")
+                                        .font(.title3)
+                                        .fontWeight(.thin)
                                         .foregroundColor(Color.white)
                                 }
                                 
-                                Text("crown projection")
-                                    .font(.title3)
-                                    .fontWeight(.thin)
-                                    .foregroundColor(Color.white)
+                                
                             }
-                    
-                            
                         }
+                        
                     }
                 }
                     .padding(.horizontal,10)
@@ -225,7 +235,7 @@ struct TreeView: View {
                     
                     ZStack{
                         RoundedRectangle(cornerRadius:20)
-                            .fill(Color.gray.opacity(0.3))
+                            .fill(Color.gray.opacity(0.25))
                             .frame(minHeight:300)
                             .padding(.horizontal,20)
                         

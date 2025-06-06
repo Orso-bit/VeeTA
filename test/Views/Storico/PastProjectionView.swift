@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PastHeightsView: View {
+struct PastProjectionView: View {
     
     var tree: Tree
     
@@ -17,9 +17,11 @@ struct PastHeightsView: View {
     //var heights : [Double] = [1.03, 1.04, 1.05]
     //var dates: [Date] = [Date(timeIntervalSinceNow: 10000), Date(timeIntervalSinceNow: 20000), Date(timeIntervalSinceNow: 30000)]
     
+    
+    
     var body: some View {
         
-        List(Array(zip(tree.pastHeights.reversed(), tree.pastHeightsDate.reversed())), id: \.1){ height, date in
+        List(Array(zip(tree.pastDiameters.reversed(), tree.pastDiametersDate.reversed())), id: \.1){ height, date in
             HStack{
                 Text(String(format: "%.2f", height)+"m")
                 Spacer()
@@ -27,17 +29,21 @@ struct PastHeightsView: View {
             }
             
         }
+        .listStyle(.inset)
+        .padding(.vertical)
+        
+        Divider()
         
         VStack{
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .bottom, spacing: 16) {
-                    ForEach(Array(tree.pastHeights.enumerated()), id: \.offset) { index, value in
+                    ForEach(Array(tree.pastDiameters.enumerated()), id: \.offset) { index, value in
                         VStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .fill(.accent)
                                 .frame(
                                     width: barWidth,
-                                    height: CGFloat(value / (tree.pastHeights.max() ?? 1)) * (chartHeight - 50)
+                                    height: CGFloat(value / (tree.pastDiameters.max() ?? 1)) * (chartHeight - 50)
                                 )
                             
                             Text(String(format: "%.1f", value) + "m")
@@ -49,9 +55,10 @@ struct PastHeightsView: View {
                 }
                 .padding()
             }
+            .navigationTitle("Past measurements")
             .frame(height: chartHeight)
         }
-        .padding()
+        .padding(.vertical, 40)
         
     }
     
