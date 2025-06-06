@@ -18,6 +18,28 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
+            
+            if folders.isEmpty {
+                VStack{
+                    Spacer()
+                    Image(systemName: "tree.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height:45)
+                        .padding(12)
+                        .foregroundStyle(.background)
+                        .background(Circle()
+                            .foregroundStyle(.tertiary))
+                    Text("""
+                         add your first cluster
+                         by pressing the + button
+                         """)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                }
+            }
+            
             List {
                 ForEach(folders, id:\.self) { folder in
                     NavigationLink {

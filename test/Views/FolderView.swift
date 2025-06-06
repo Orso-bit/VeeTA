@@ -21,6 +21,28 @@ struct FolderView: View {
     
     var body: some View {
         NavigationStack {
+            
+            if folder.trees.isEmpty {
+                VStack{
+                    Spacer()
+                    Image(systemName: "tree.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height:45)
+                        .padding(12)
+                        .foregroundStyle(.background)
+                        .background(Circle()
+                            .foregroundStyle(.tertiary))
+                    Text("""
+                         add your first tree
+                         by pressing the + button
+                         """)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                }
+            }
+            
             List {
                 ForEach(folder.trees, id: \.self) { tree in
                     NavigationLink {
