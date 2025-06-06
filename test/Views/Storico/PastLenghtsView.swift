@@ -23,7 +23,7 @@ struct PastLengthsView: View {
         
         List(Array(zip(tree.pastLenghts.reversed(), tree.pastLenghtsDate.reversed())), id: \.1){ height, date in
             HStack{
-                Text(String(format: "%.2f", height)+"m")
+                Text(String(format: "%.2f", height)+"°")
                 Spacer()
                 Text(Date.FormatStyle().format(date))
             }
@@ -46,7 +46,7 @@ struct PastLengthsView: View {
                                     height: CGFloat(value / (tree.pastLenghts.max() ?? 1)) * (chartHeight - 50)
                                 )
                             
-                            Text(String(format: "%.1f", value) + "m")
+                            Text(String(format: "%.1f", value) + "°")
                                 .font(.caption)
                                 .rotationEffect(.degrees(-45))
                                 .frame(width: barWidth, height: 30)
