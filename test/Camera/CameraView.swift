@@ -34,7 +34,7 @@ struct CameraView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var selectedIndex = 0
     
-    // Parametri per gestire il context da cui è chiamato
+    // Parametri per gestire il context da cui Ã¨ chiamato
     var onMeasurementTaken: ((MeasurementType, Double) -> Void)?
     var sourceContext: String = "unknown"
     
@@ -46,26 +46,18 @@ struct CameraView: View {
         NavigationStack {
             VStack {
                 //TabView con le varie feature da selezionare
-/*                TabView(selection: $selectedIndex) {
-                    HeightView(onMeasurementTaken: { value in
-                        onMeasurementTaken?(.height, value)
-                        dismiss()
+                TabView(selection: $selectedIndex) {
+                    HeightView(onMeasurementTaken: { height in
+                        if let callback = onMeasurementTaken {
+                            callback(.height, height)
+                        }
                     }).tag(0) //Si apre con questa
-                    LengthView(onMeasurementTaken: { value in
-                        onMeasurementTaken?(.length, value)
-                        dismiss()
-                    }).tag(1)
-                    ClinometerView(onMeasurementTaken: { value in
-                        onMeasurementTaken?(.inclination, value)
-                        dismiss()
-                    }).tag(2)
-                    ProiectionView(onMeasurementTaken: { value in
-                        onMeasurementTaken?(.diameter, value)
-                        dismiss()
-                    }).tag(3)
+                    LengthView().tag(1)
+                    ClinometerView().tag(2)
+                    ProiectionView().tag(3)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-*/
+
                 HStack {
                     ForEach(0..<4) { index in
                         Circle()
